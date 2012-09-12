@@ -11,7 +11,7 @@ Inicializar FotoCach
 public static ImageFecher fotoCach;
 public static final String IMAGE_CACHE_DIR = "fotos";
 
-# Por ejemplo en el onCreate de un ListFragment.
+ Por ejemplo en el onCreate de un ListFragment.
 
         ImageCacheParams cacheParams = new ImageCacheParams(IMAGE_CACHE_DIR);
 		
@@ -26,7 +26,9 @@ Usar FotoCach
 
 Ejemplo:
 
-  // Muestra las imágenes dado un ID de Contacto
+  /**
+  * Muestra las imágenes dado un ID de Contacto
+  **/
   fotoCach.loadImage(idContacto, null, null, viewHolder.imageView);
 
 
