@@ -74,26 +74,60 @@ public abstract class ImageWorker {
      * @param data El MAIL de la imagen a descargar.
      * @param imageView El ImageView para unir la imagen recuperada.
      */
-    public void loadImage(String email, ImageView imageView) {
-        Bitmap bitmap = null;
-        String idContact = null;
+    public void loadImage(String idContact, String idPhoto, String email, ImageView imageView) {
         
-       
-        if(contactsMap!=null){
-        	idContact = contactsMap.get(email);
-        } else {
-        	contactsMap = getContactsMapWithOutTask();
-        	idContact = contactsMap.get(email);
+        // Carga por email
+        if(email!=null && idContact==null && idPhoto==null){
+	        if(contactsMap!=null){
+	        	idContact = contactsMap.get(email);
+	        } else {
+	        	contactsMap = getContactsMapWithOutTask();
+	        	idContact = contactsMap.get(email);
+	        }
+	        if(idContact!=null){
+		       loadImage(idContact, imageView);
+	        }
         }
-        if(idContact!=null){
-	        if (mImageCache != null) {
+        
+        // Carga por ID de Contacto
+        else if(email==null && idContact!=null && idPhoto==null){
+        	loadImage(idContact, imageView);
+        }             
+        
+        // Carga por ID de Foto
+        else if(email==null && idContact==null && idPhoto!=null){
+        	String id = null;
+        	final String[] projection = new String[] {
+					Contacts._ID
+			};
+
+			@SuppressWarnings("deprecation")
+			final Cursor contact = ((Activity) mContext).managedQuery(
+					Contacts.CONTENT_URI,
+					projection,
+					Contacts.PHOTO_ID + "=?",			
+					new String[]{idContact},	
+					null);
+			
+			if(contact.moveToFirst()) {
+				 id = contact.getString(
+						contact.getColumnIndex(Contacts._ID));
+			}
+			loadImage(id, imageView);
+		}
+    }
+
+
+    private void loadImage(String idContact, ImageView imageView) {
+    	Bitmap bitmap = null;
+    	 if (mImageCache != null) {
 	            bitmap = mImageCache.getBitmapFromMemCache(idContact);
 	        }
 	
 	        if (bitmap != null) {
 	            // Bitmap encontrado en la caché de memoria
 	            imageView.setImageBitmap(bitmap);
-	        } else if (cancelPotentialWork(email, imageView)) {
+	        } else if (cancelPotentialWork(idContact, imageView)) {
 	        	// De lo contrario ejecuta el AsyncTask para recuperar el bitmap
 	            final BitmapWorkerTask task = new BitmapWorkerTask(imageView);
 	            final AsyncDrawable asyncDrawable =
@@ -101,11 +135,9 @@ public abstract class ImageWorker {
 	            imageView.setImageDrawable(asyncDrawable);
 	            task.execute(idContact);
 	        }
-        }
-    }
+	}
 
-
-    private Map<String, String> getContactsMapWithOutTask() {
+	private Map<String, String> getContactsMapWithOutTask() {
     	String id;
         Uri uri = Contacts.CONTENT_URI;
         String[] projection = new String[] {

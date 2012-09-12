@@ -69,7 +69,7 @@ public class ImageFetcher extends ImageWorker {
 	    
 
 	    /**
-	     * Obtiene un bitmap desde una cuenta de email, lo escribe a disco y devuelve un puntero a un File. Esta es
+	     * Obtiene un bitmap dado un ID de Contacto, lo escribe a disco y devuelve un puntero a un File. Esta es
 	     * implementación de una caché de disco simple.
 	     *
 	     * @param context El contexto a utilizar
