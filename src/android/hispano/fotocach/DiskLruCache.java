@@ -238,8 +238,8 @@ public class DiskLruCache {
      */
     public static File getDiskCacheDir(Context context, String uniqueName) {
 
-        // Comprueba si media está montado hay almacenamiento interno, de ser así, intenta usar la cache de directorio externa 
-        // de lo contario usa la cache de directirio interna
+        // Comprueba si hay almacenamiento interno, de ser así, intenta usar la caché de directorio externa 
+        // de lo contario usa la caché de directorio interna
         final String cachePath =
                 Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED ||
                         !Utils.isExternalStorageRemovable() ?

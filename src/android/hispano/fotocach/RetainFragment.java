@@ -27,12 +27,11 @@ public class RetainFragment extends Fragment {
         // Comprueba si tenemos retenido el worker fragment.
         RetainFragment mRetainFragment = (RetainFragment) fragmentManager.findFragmentByTag(TAG);
 
-        // Sin no está retenido (o es la primera que es ejecutarse), necesitamos crearlo y añadirlo.
+        // Sin no está retenido (o es la primera en ejecutarse), necesitamos crearlo y añadirlo.
         if (mRetainFragment == null) {
             mRetainFragment = new RetainFragment();
             fragmentManager.beginTransaction().add(mRetainFragment, TAG).commit();
         }
-
         return mRetainFragment;
     }
 

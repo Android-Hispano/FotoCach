@@ -82,7 +82,6 @@ public abstract class ImageWorker {
 					Contacts._ID
 			};
 
-			@SuppressWarnings("deprecation")
 			final Cursor contact = ((Activity) mContext).managedQuery(
 					Contacts.CONTENT_URI,
 					projection,
@@ -149,8 +148,6 @@ public abstract class ImageWorker {
 		return mapa;
 	}
     
-    
-    
 
 	/**
      * Establece el placeholder para el bitmap que se mostrará cuando el hilo den background
@@ -163,14 +160,16 @@ public abstract class ImageWorker {
     }
 
     /**
-     * Establece el placeholder para el bitmap que se mostrará cuando el hilo den background
+     * Establece el placeholder para el bitmap que se mostrará cuando el hilo en background
      * esté ejecutándose.
      * 
      * @param resId
      */
     public void setLoadingImage(int resId) {
-        mLoadingBitmap = BitmapFactory.decodeResource(mContext.getResources(), resId);
-    }
+    	if(mContext!=null && resId!=-1){
+    		mLoadingBitmap = BitmapFactory.decodeResource(mContext.getResources(), resId);
+    	}
+   	}
 
     /**
      * Establece el objeto {@link ImageCache} para ser utilizado con este ImageWorker.

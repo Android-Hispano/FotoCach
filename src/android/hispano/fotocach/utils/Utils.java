@@ -46,10 +46,10 @@ public class Utils {
         if (hasExternalCacheDir()) {
             return context.getExternalCacheDir();
         }
-
-        // Anterior a Froyo necesitamos construir el directorio de cache externa nosotros mismos
-        final String cacheDir = "/Android/data/" + context.getPackageName() + "/cache/";
-        return new File(Environment.getExternalStorageDirectory().getPath() + cacheDir);
+        
+	     // Anterior a Froyo necesitamos construir el directorio de cache externa nosotros mismos
+	     final String cacheDir = "/Android/data/" + context.getPackageName() + "/cache/";
+	     return new File(Environment.getExternalStorageDirectory().getPath() + cacheDir);
     }
 
     /**
